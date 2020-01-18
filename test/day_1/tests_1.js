@@ -29,7 +29,6 @@ describe('Day 1', () => {
       assert.equal(result, 3317659)
     })
   })
-
 })
 
 describe('Part 2: Fixed algorithm', () => {
@@ -55,5 +54,4 @@ describe('Part 2: Fixed algorithm', () => {
       assert.equal(result, 4973616)
     })
   })
-
 })

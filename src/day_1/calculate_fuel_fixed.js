@@ -2,8 +2,7 @@
 const Operation = require('../operation.js')
 
 class CalculateFuel extends Operation {
-
-  constructor() {
+  constructor () {
     super('./day_1/mass_2.js')
   }
 
@@ -12,18 +11,17 @@ class CalculateFuel extends Operation {
    * @param {Number} mass The mass to get the required fuel
    * @return The fuel amount
    */
-  calcFuel(mass) {
+  calcFuel (mass) {
     return Math.floor(mass / 3) - 2
   }
 
-
   /**
    * Calculates the full amount of fuel
-   * @param {Number} mass 
+   * @param {Number} mass
    */
-  calcFullFuel(mass) {
+  calcFullFuel (mass) {
     mass = this.calcFuel(mass)
-    if (mass<=0) {
+    if (mass <= 0) {
       return 0
     }
     return mass + this.calcFullFuel(mass)
@@ -33,15 +31,14 @@ class CalculateFuel extends Operation {
    * Calculates the sum of the required fuel for a list of mass objects
    * @returns {Number} the total of required fuel
    */
-  processAllMassIndices() {
+  processAllMassIndices () {
     try {
-      const result = this.massIndices.reduce((a, b) => a + this.calcFullFuel(b), 0) 
+      const result = this.massIndices.reduce((a, b) => a + this.calcFullFuel(b), 0)
       return result
     } catch (error) {
       console.error(error)
     }
   }
-
 }
 
 module.exports = CalculateFuel

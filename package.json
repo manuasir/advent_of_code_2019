@@ -30,6 +30,7 @@
   "homepage": "https://github.com/manuasir/advent_of_code_2019#readme",
   "devDependencies": {
     "chai": "^4.2.0",
-    "mocha": "^7.0.0"
+    "mocha": "^7.0.0",
+    "standard": "^14.3.1"
   }
 }

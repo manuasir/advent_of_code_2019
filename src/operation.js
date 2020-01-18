@@ -1,10 +1,8 @@
 
 class Operation {
-
-  constructor(path) {
+  constructor (path) {
     this.massIndices = require(path)
   }
-
 }
 
 module.exports = Operation
