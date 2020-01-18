@@ -1,8 +1,10 @@
 
-class Operation {
+const Operation = require('../operation.js')
+
+class CalculateFuel extends Operation {
 
   constructor() {
-    this.massIndices = require('./mass.js')
+    super('./day_1/mass.js')
   }
 
   /**
@@ -29,4 +31,4 @@ class Operation {
 
 }
 
-module.exports = Operation
+module.exports = CalculateFuel
