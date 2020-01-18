@@ -18,13 +18,10 @@ class Operation {
    * Calculates the sum of the required fuel for a list of mass objects
    * @returns {Number} the total of required fuel
    */
-  processAllMassIndices(){
+  processAllMassIndices() {
     try {
-      let sum = 0
-      for(let mass of this.massIndices){
-        sum+=this.calcFuel(mass)
-      }
-      return sum
+      const result = this.massIndices.reduce((a, b) => a + this.calcFuel(b), 0)
+      return result
     } catch (error) {
       console.error(error)
     }

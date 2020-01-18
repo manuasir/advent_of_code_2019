@@ -22,6 +22,7 @@ describe('Day 1', () => {
       assert.equal(result, 33583)
     })
   })
+  
   describe('Calculate total fuel amount', () => {
     it('For a list of objects', () => {
       const result = op.processAllMassIndices()
