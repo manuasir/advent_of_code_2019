@@ -1,0 +1,35 @@
+{
+  "name": "advent_of_code_2019",
+  "version": "1.0.0",
+  "description": "AoC challenge using Node.JS",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha ./test/**/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manuasir/advent_of_code_2019.git"
+  },
+  "keywords": [
+    "nodejs",
+    "advent",
+    "code",
+    "2019",
+    "challenge",
+    "js",
+    "es6"
+  ],
+  "author": "manuasir",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/manuasir/advent_of_code_2019/issues"
+  },
+  "homepage": "https://github.com/manuasir/advent_of_code_2019#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^7.0.0"
+  }
+}
