@@ -1,9 +1,9 @@
 
-const Operation = require('../operation.js')
+const Operation = require('./operation.js')
 
 class CalculateFuel extends Operation {
   constructor () {
-    super('./day_1/mass_2.js')
+    super('./mass_2.js')
   }
 
   /**
