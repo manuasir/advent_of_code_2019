@@ -1,8 +1,8 @@
 
-class IntcodeExecutor {
+class IntcodeInterpreter {
 
   constructor(code) {
-    this.code = code || require('./input_src.js')
+    this.code = code
     console.log('LOADED ',this.code[0])
   }
 
@@ -70,4 +70,4 @@ class IntcodeExecutor {
   }
 }
 
-module.exports = IntcodeExecutor
+module.exports = IntcodeInterpreter
