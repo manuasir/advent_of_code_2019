@@ -2,6 +2,7 @@
 const { assert } = require('chai')
 const code = require('../../src/day_2/index.js')
 const srcCode = require('./code/input_src')
+
 describe('Day 2', () => {
   describe('Execute Intcode', () => {
     it('First test program 1,0,0,0,99', () => {
@@ -27,12 +28,6 @@ describe('Day 2', () => {
       assert.equal(result[0], 3931283)
     })
   })
-  describe('Find gravity value', () => {
-    it('First test program from input file', () => {
-    //  const result = code.calculateOutput(19690720)
-    //  assert.equal(result[0], 3931283)
-    })
 
-  })
 })
 

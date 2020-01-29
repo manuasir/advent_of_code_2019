@@ -3,7 +3,6 @@ class IntcodeInterpreter {
 
   constructor(code) {
     this.code = code
-    console.log('LOADED ',this.code[0])
   }
 
   setValue(value, position) {
