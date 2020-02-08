@@ -81,29 +81,29 @@ describe('Day 3', () => {
 
   })
   describe('Tests for the Manhattan distance calculation', () => {
-    // it('Manhattan distance', () => {
-    //   const panel = new Panel([['U7', 'R6', 'D4', 'L4']])
-    //   const result = panel.load()
-    //   assert.equal(result.getBlocks().length, 23)
-    //   const lastBlock = result.getLastBlock()
-    //   const distance = manhattan.manhattanDistance(lastBlock)
-    //   assert.equal(distance, 5)
-    // })
-    // it('Manhattan distance', () => {
-    //   const panel = new Panel([['R8', 'U5', 'L5', 'D3'], ['U7', 'R6', 'D4', 'L4']])
-    //   const result = panel.load()
-    //   const dups = result.getCollisions()
-    //   const minManhattanDistance = manhattan.getMinColision(dups)
-    //   assert.equal(minManhattanDistance, 6)
-    // })
-    // it('Manhattan distance x3', () => {
-    //   const panel = new Panel([['R8', 'U5', 'L5', 'D3'], ['U7', 'R6', 'D4', 'L4'], ['L2','U2','R5','U2','L2','D2']])
-    //   const result = panel.load()
-    //   const dups = result.getCollisions()
-    //   console.log('DUPS ',dups)
-    //   const minManhattanDistance = manhattan.getMinColision(dups)
-    //   assert.equal(minManhattanDistance, 3)
-    // })
+    it('Manhattan distance', () => {
+      const panel = new Panel([['U7', 'R6', 'D4', 'L4']])
+      const result = panel.load()
+      assert.equal(result.getBlocks().length, 23)
+      const lastBlock = result.getLastBlock()
+      const distance = manhattan.manhattanDistance(lastBlock)
+      assert.equal(distance, 5)
+    })
+    it('Manhattan distance', () => {
+      const panel = new Panel([['R8', 'U5', 'L5', 'D3'], ['U7', 'R6', 'D4', 'L4']])
+      const result = panel.load()
+      const collisions = result.getCollisions()
+      const minManhattanDistance = manhattan.getMinColision(collisions)
+      assert.equal(minManhattanDistance, 6)
+    })
+    it('Manhattan distance x3', () => {
+      const panel = new Panel([['R8', 'U5', 'L5', 'D3'], ['U7', 'R6', 'D4', 'L4'], ['L2','U2','R5','U2','L2','D2']])
+      const result = panel.load()
+      const dups = result.getCollisions()
+      console.log('COLS ',dups)
+      const minManhattanDistance = manhattan.getMinColision(dups)
+      assert.equal(minManhattanDistance, 3)
+    })
     // it('Manhattan distance more complex', () => {
     //   const panel = new Panel([['R75','D30','R83','U83','L12','D49','R71','U7','L72'],['U62','R66','U55','R34','D71','R55','D58','R83']])
     //   const result = panel.load()

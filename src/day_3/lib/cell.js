@@ -7,7 +7,7 @@ class Cell {
    * @param {Number} y 
    * @param {String} val 
    */
-  constructor(x,y,val) {
+  constructor(x,y,val = true) {
     this.block = [x,y,val]
   }
 
