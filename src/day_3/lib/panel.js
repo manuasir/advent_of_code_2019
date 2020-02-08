@@ -12,90 +12,116 @@ class Panel {
     this.wires = wires
   }
 
-
   /**
    * Decodes the movement and sets the positions path.
    * @param {String} dir The direction to move forward.
    * @param {Number} steps The number of steps to give.
    */
-  setPositions(dir,steps) {
-    const prevX = this.grid.getLastBlock().getX()
-    const prevY = this.grid.getLastBlock().getY()
-    console.log('DIR',steps)
-    switch(dir) {
+  setPositions(dir, steps) {
+    let prevX = 0
+    let prevY = 0
+    switch (dir) {
+      case 'E':
+        console.log('EOF')
+        this.grid.addCell(0, 0, 'EOF')
+        break
       case 'U':
-        for (let i=prevY;i<prevY+steps;i++){
-          console.log('subiendo ',prevX,i)
-          this.grid.addCell(prevX,i,true)
+        console.log('UP')
+        console.log('SIZE ',this.grid.size())
+        prevY = (!this.grid.isLastBlockEof()) ? this.grid.getLastBlock().getY() : 0
+        prevX = (!this.grid.isLastBlockEof()) ? this.grid.getLastBlock().getX() : 0
+        console.log('!prevY',prevY)
+        console.log('!prevX',prevX)
+        for (let i = prevY + 1; i <= prevY + steps; i++) {
+          console.log('from i', i + ' to ', prevY + steps)
+          this.grid.addCell(prevX, i, true)
         }
         break
       case 'D':
-
-        for (let i=prevY;i>=prevY-steps;i--){
-          console.log('bajando ',prevX,i)
-          this.grid.addCell(prevX,i,true)
+        console.log('DOWN')
+        console.log('SIZE ',this.grid.size())
+        prevY = (!this.grid.isLastBlockEof()) ? this.grid.getLastBlock().getY() : 0
+        prevX = (!this.grid.isLastBlockEof()) ? this.grid.getLastBlock().getX() : 0
+        console.log('!prevY',prevY)
+        console.log('!prevX',prevX)
+        for (let i = prevY - 1; i >= prevY - steps; i--) {
+          console.log('from i', i + ' to ', prevY - steps)
+          this.grid.addCell(prevX, i, true)
         }
         break
       case 'R':
-
-        for (let i=prevX;i<prevX+steps;i++){
-          console.log('derecha ',i,prevY)
-          this.grid.addCell(i,prevY,true)
+        console.log('RIGHT')
+        console.log('SIZE ',this.grid.size())
+        prevY = (!this.grid.isLastBlockEof()) ? this.grid.getLastBlock().getY() : 0
+        prevX = (!this.grid.isLastBlockEof()) ? this.grid.getLastBlock().getX() : 0
+        console.log('!prevY',prevY)
+        console.log('!prevX',prevX)
+        for (let i = prevX + 1; i <= prevX + steps; i++) {
+          // console.log('right ',i)
+          console.log('from i', i + ' to ', prevX + steps)
+          this.grid.addCell(i, prevY, true)
         }
         break
       case 'L':
-        for (let i=prevX;i>=prevX-steps;i--){
-          console.log('izquierda ',i,prevY)
-          this.grid.addCell(i,prevY,true)
+        console.log('LEFT')
+        console.log('SIZE ',this.grid.size())
+        prevX = (!this.grid.isLastBlockEof()) ? this.grid.getLastBlock().getX() : 0
+        prevY = (!this.grid.isLastBlockEof()) ? this.grid.getLastBlock().getY() : 0
+        console.log('!prevY',prevY)
+        console.log('!prevX',prevX)
+        for (let i = prevX - 1; i >= prevX - steps; i--) {
+          console.log('from i', i + ' to ', prevX - steps)
+          this.grid.addCell(i, prevY, true)
         }
         break
     }
   }
 
+  decodeInstruction(instruction) {
+    const match = instruction.match(/^(\w)(\S.*)/i)
+    return { direction: match[1], steps: parseInt(match[2]) }
+  }
+
   /**
    * Decode an instruction and returns its position in the grid
    * @param {String} instruction 
+   * @param {Boolean} eof End of the wire.
    * @returns {Cell} The cell with the new values
    */
-  decodeInstruction(instruction){
-    const match = instruction.match(/^(\w)(\S.*)/i)
-    this.setPositions(match[1],match[2])
+  executeInstruction(instruction) {
+    const { direction, steps } = this.decodeInstruction(instruction)
+    this.setPositions(direction, steps)
   }
 
   /**
    * Calculates the positions in the grid occupied by a wire
    * @param {Array} wire 
    */
-  readPositions(wire){
-    if ( !Array.isArray(wire) ) {
+  processWire(wire) {
+    if (!Array.isArray(wire)) {
       throw Error('Invalid wire format.')
     }
-    for (let instruction of wire){
-      this.decodeInstruction(instruction)
-    }
+    wire.map(instruction => this.executeInstruction(instruction))
+    this.executeInstruction('E0')
     return
   }
-
 
   /**
    * Starts the minimum manhattan distance calculation
    */
-  load(){
-    if ( !Array.isArray(this.wires) ) {
+  load() {
+    if (!Array.isArray(this.wires)) {
       throw Error('Invalid wire array.')
     }
-    let min = 99999
-    for ( let wire of this.wires ){
-      this.readPositions(wire)
-    }
+    this.wires.map(wire => this.processWire(wire))
     return this.grid
   }
-  
+
   /**
    * Returns the grid
    * @returns {Grid} The grid model.
    */
-  getGrid(){
+  getGrid() {
     return this.grid
   }
 

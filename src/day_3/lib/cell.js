@@ -8,9 +8,7 @@ class Cell {
    * @param {String} val 
    */
   constructor(x,y,val) {
-    this.x = x,
-    this.y = y,
-    this.value = val
+    this.block = [x,y,val]
   }
 
   /**
@@ -18,7 +16,7 @@ class Cell {
    * @returns {Number} the value of the X axis
    */
   getX(){
-    return this.x
+    return this.block[0]
   }
 
   /**
@@ -26,7 +24,15 @@ class Cell {
    * @returns {Number} the value of the Y axis
    */
   getY(){
-    return this.y
+    return this.block[1]
+  }
+
+  /**
+   * Gets the axis information in String format
+   * @returns {String} The serialized coordinates
+   */
+  getSerializedCoord(){
+    return `${this.block[0]}:${this.block[1]}`
   }
 
   /**
@@ -34,7 +40,7 @@ class Cell {
    * @returns {Boolean} the value of the cell
    */
   getValue(){
-    return this.value
+    return this.block[2]
   }
 
 }
