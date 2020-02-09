@@ -17,61 +17,31 @@ class Panel {
    * @param {String} dir The direction to move forward.
    * @param {Number} steps The number of steps to give.
    */
-  setPositions(dir, steps) {
-    let prevX = 0
-    let prevY = 0
+  setPositions(dir, steps, wire) {
+    let prevY = (!this.grid.isLastBlockEof()) ? this.grid.getLastBlock().getY() : 0
+    let prevX = (!this.grid.isLastBlockEof()) ? this.grid.getLastBlock().getX() : 0
     switch (dir) {
       case 'E':
-        console.log('EOF')
         this.grid.addCell(0, 0, 'EOF')
         break
       case 'U':
-        console.log('UP')
-        console.log('SIZE ',this.grid.size())
-        prevY = (!this.grid.isLastBlockEof()) ? this.grid.getLastBlock().getY() : 0
-        prevX = (!this.grid.isLastBlockEof()) ? this.grid.getLastBlock().getX() : 0
-        console.log('!prevY',prevY)
-        console.log('!prevX',prevX)
         for (let i = prevY + 1; i <= prevY + steps; i++) {
-          console.log('from i', i + ' to ', prevY + steps)
-          this.grid.addCell(prevX, i, true)
+          this.grid.addCell(prevX, i, wire)
         }
         break
       case 'D':
-        console.log('DOWN')
-        console.log('SIZE ',this.grid.size())
-        prevY = (!this.grid.isLastBlockEof()) ? this.grid.getLastBlock().getY() : 0
-        prevX = (!this.grid.isLastBlockEof()) ? this.grid.getLastBlock().getX() : 0
-        console.log('!prevY',prevY)
-        console.log('!prevX',prevX)
         for (let i = prevY - 1; i >= prevY - steps; i--) {
-          console.log('from i', i + ' to ', prevY - steps)
-          this.grid.addCell(prevX, i, true)
+          this.grid.addCell(prevX, i, wire)
         }
         break
       case 'R':
-        console.log('RIGHT')
-        console.log('SIZE ',this.grid.size())
-        prevY = (!this.grid.isLastBlockEof()) ? this.grid.getLastBlock().getY() : 0
-        prevX = (!this.grid.isLastBlockEof()) ? this.grid.getLastBlock().getX() : 0
-        console.log('!prevY',prevY)
-        console.log('!prevX',prevX)
         for (let i = prevX + 1; i <= prevX + steps; i++) {
-          // console.log('right ',i)
-          console.log('from i', i + ' to ', prevX + steps)
-          this.grid.addCell(i, prevY, true)
+          this.grid.addCell(i, prevY, wire)
         }
         break
       case 'L':
-        console.log('LEFT')
-        console.log('SIZE ',this.grid.size())
-        prevX = (!this.grid.isLastBlockEof()) ? this.grid.getLastBlock().getX() : 0
-        prevY = (!this.grid.isLastBlockEof()) ? this.grid.getLastBlock().getY() : 0
-        console.log('!prevY',prevY)
-        console.log('!prevX',prevX)
         for (let i = prevX - 1; i >= prevX - steps; i--) {
-          console.log('from i', i + ' to ', prevX - steps)
-          this.grid.addCell(i, prevY, true)
+          this.grid.addCell(i, prevY, wire)
         }
         break
     }
@@ -88,21 +58,21 @@ class Panel {
    * @param {Boolean} eof End of the wire.
    * @returns {Cell} The cell with the new values
    */
-  executeInstruction(instruction) {
+  executeInstruction(instruction, wire) {
     const { direction, steps } = this.decodeInstruction(instruction)
-    this.setPositions(direction, steps)
+    this.setPositions(direction, steps, wire)
   }
 
   /**
    * Calculates the positions in the grid occupied by a wire
    * @param {Array} wire 
    */
-  processWire(wire) {
+  processWire(wire, index) {
     if (!Array.isArray(wire)) {
       throw Error('Invalid wire format.')
     }
-    wire.map(instruction => this.executeInstruction(instruction))
-    this.executeInstruction('E0')
+    wire.map(instruction => this.executeInstruction(instruction, index))
+    this.executeInstruction('E0', index)
     return
   }
 
@@ -110,11 +80,16 @@ class Panel {
    * Starts the minimum manhattan distance calculation
    */
   load() {
-    if (!Array.isArray(this.wires)) {
-      throw Error('Invalid wire array.')
+    try {
+      if (!Array.isArray(this.wires)) {
+        throw Error('Invalid wire array.')
+      }
+      this.wires.map((wire, index) => { this.processWire(wire, index) })
+      return this.grid
+    } catch (error) {
+      console.error(error)
     }
-    this.wires.map(wire => this.processWire(wire))
-    return this.grid
+
   }
 
   /**

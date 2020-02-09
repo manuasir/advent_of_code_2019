@@ -8,7 +8,7 @@ class Grid {
    * @param {Array} wires 
    */
   constructor() {
-    this.cells = [new Cell(0, 0, true)]
+    this.cells = [new Cell(0, 0, 0)]
   }
 
   /**
@@ -33,7 +33,6 @@ class Grid {
    * @param {Boolean} value 
    */
   addCell(x, y, value) {
-    console.log('pushing ', value + ' x: ', x + ' y: ', y)
     this.cells.push(new Cell(x, y, value))
     return
   }
@@ -44,16 +43,22 @@ class Grid {
    */
   getCollisions() {
     try {
-      const coords = this.cells.map((block, index) => block.getSerializedCoord())
-      console.log('COORDS ', coords)
-      const count = names =>
-        names.reduce((a, b) => ({
+      const coords = this.cells.map(block => block.getSerializedCoord())
+
+      const count = objs =>
+        objs.reduce((a, b) => ({
           ...a,
           [b]: (a[b] || 0) + 1
         }), {})
+
       const duplicates = dict =>
         Object.keys(dict).filter((a) => dict[a] > 1)
-      const aux = duplicates(count(coords)).filter(block => block !== '0:0')
+
+      // Remove self collitions
+      const removedSelfCollitions = [...new Set(coords)].filter(block => block !== '0:0:0')
+      const cleanList = removedSelfCollitions.map(item => `${item.split(':')[0]}:${item.split(':')[1]}`)
+      const aux = duplicates(count(cleanList)).filter(block => block !== '0:0')
+
       const dups = []
       aux.forEach(block => dups.push(new Cell(parseInt(block.split(':')[0]),parseInt(block.split(':')[1]))))
       return dups

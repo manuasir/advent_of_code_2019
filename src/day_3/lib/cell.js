@@ -32,7 +32,7 @@ class Cell {
    * @returns {String} The serialized coordinates
    */
   getSerializedCoord(){
-    return `${this.block[0]}:${this.block[1]}`
+    return `${this.block[0]}:${this.block[1]}:${this.block[2]}`
   }
 
   /**
